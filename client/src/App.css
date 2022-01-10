@@ -1,14 +1,15 @@
 
 :root {
   --1: #a5aca9;
-  --2: #FAF3DD;
+  --2: rgb(250, 243, 221);
   --3: #ad8350ff;
   --4: #3e4c5eff;
   --5: #2c3d55ff;
   --6: rgb(204, 41, 54);
   --7: #9b1d20ff;
   --8: rgb(35, 206, 107);
-  --9: #A846A0;
+  --9: rgb(8, 139, 40);
+  --10: rgb(168, 70, 160);
 }
 
 
@@ -60,6 +61,7 @@ html, body {
   color: var(--2);
   font-size: 1.3em;
   font-family: GothamBold; 
+  outline: none;
 }
 
 .btn-error:hover {
@@ -70,5 +72,20 @@ html, body {
 .btn-success:hover {
   background: rgba(35, 206, 107, 0.15) !important;
   color: var(--8) !important;
+}
+
+.btn-success:active {
+  font-size: 1.3em !important;
+  margin: 0.05em;
+}
+
+.btn-purple:hover {
+  background: rgba(168, 70, 160, 0.15) !important;
+  color: var(--10) !important;
+}
+
+.btn-purple-checked {
+  background: rgba(168, 70, 160, 0.15) !important;
+  color: rgb(200, 100, 190) !important;
 }
 

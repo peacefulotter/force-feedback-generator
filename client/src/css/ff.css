@@ -8,7 +8,19 @@
     height: 80%;
 }
 
+
 .ff-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ff-main-title {
+    font-size: 3em;
+}
+
+.ff-sub-title {
+    color: rgba(250, 243, 221,  0.7);
     font-size: 2em;
 }
 
@@ -19,6 +31,18 @@
 
 .ff-type {
     margin: 0px 10px;
+}
+
+.slider-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 50px 0px;
+}
+
+.slider-name {
+   margin-right: 25px;
+   margin-bottom: 5px;
 }
 
 .ff-launch {
