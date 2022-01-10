@@ -1,0 +1,26 @@
+
+.ff-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 60%;
+    height: 80%;
+}
+
+.ff-title {
+    font-size: 2em;
+}
+
+.ff-types {
+    display: flex;
+    justify-content: center;
+}
+
+.ff-type {
+    margin: 0px 10px;
+}
+
+.ff-launch {
+    font-size: 1.4em !important;
+}

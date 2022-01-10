@@ -1,0 +1,74 @@
+
+:root {
+  --1: #a5aca9;
+  --2: #FAF3DD;
+  --3: #ad8350ff;
+  --4: #3e4c5eff;
+  --5: #2c3d55ff;
+  --6: rgb(204, 41, 54);
+  --7: #9b1d20ff;
+  --8: rgb(35, 206, 107);
+  --9: #A846A0;
+}
+
+
+@font-face {
+  font-family: GothamRegular;
+  src: url(./css/fonts/Gotham_Medium.ttf);
+}
+@font-face {
+  font-family: GothamBold;
+  src: url(./css/fonts/Gotham_Bold.otf);
+}
+@font-face {
+  font-family: GothamThin;
+  src: url(./css/fonts/Gotham_Thin.otf);
+}
+@font-face {
+  font-family: GothamLight;
+  src: url(./css/fonts/Gotham_Light.otf);
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  color: var(--2);
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  background: var(--5);
+  font-size: 1.2em;
+  font-family: GothamRegular; 
+}
+
+.btn {
+  padding: 10px 25px;
+  background: var(--4);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: var(--2);
+  font-size: 1.3em;
+  font-family: GothamBold; 
+}
+
+.btn-error:hover {
+  background: rgba(204, 41, 54, 0.2);
+  color: var(--6);
+}
+
+.btn-success:hover {
+  background: rgba(35, 206, 107, 0.15) !important;
+  color: var(--8) !important;
+}
+
