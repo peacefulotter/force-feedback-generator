@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { ThemeProvider } from '@mui/styles';
 import useSlider, { useSliderStyles } from './useSlider'
+import useDirections from './useDirections'
 import Checkbox from './Checkbox';
 
 import { postRequest } from '../assets/request';
@@ -12,12 +13,16 @@ import '../App.css';
 // FFEffect(direction, effectLength, previousLevel, nextLevel, level )
 
 const ForceFeedback = () => {
+    const [liveUpload, setLiveUpload] = useState<boolean>(false)
     const [type, setType] = useState<string>("constant");
     const [previousLevel, setPreviousLevel] = useState<number>(0);
 
-    const [direction, DirectionSlider] = useSlider("Direction");
-    const [nextLevel, NextLevelSlider] = useSlider("Next level");
-    const [level, LevelSlider] = useSlider("Level");
+    const [direction, Directions] = useDirections();
+    const [effectLength, EffectLengthSlider] = useSlider("Effect Length");
+    const [nextLevel, NextLevelSlider] = useSlider("Next Level");
+    const [level, LevelSlider] = useSlider("Level",  () => {
+        if ( liveUpload ) launchFF();
+    } );
 
     const classes = useSliderStyles()
 
@@ -25,22 +30,25 @@ const ForceFeedback = () => {
         setType(t);
     }
 
-    const updateParams = () => {
-        const FF_PARAMS = {
-            direction, previousLevel, level, nextLevel
+    const liveUploadUpdate = (isChecked: boolean) => {
+        setLiveUpload(isChecked)
+    }
+
+    const launchFF = () => {
+        const FF_SETTINGS = {
+            type, direction, effectLength: effectLength * 1000, previousLevel, nextLevel, level
         }
-        postRequest("/params", {name: "bob", number: 30}, (data) => {
+
+        console.log("Sending POST request with FF settings: ", FF_SETTINGS);
+        
+        postRequest("/params", FF_SETTINGS, (data) => {
             console.log(data);
-            setPreviousLevel(level);
+            // setPreviousLevel(level);
         })
     }
 
     return (
         <div className="ff-wrapper">
-            <div className="ff-title">
-                <div className="ff-main-title">ForceFeedback</div>
-                <div className="ff-sub-title">Controller</div>
-            </div>
             <div className="ff-types">
                 <Checkbox 
                     className='btn-purple ff-type'
@@ -55,15 +63,22 @@ const ForceFeedback = () => {
                     forceState={type === "sine"}
                     onClick={updateType("sine")} />
             </div>
-            <div className="ff-sliders">
+            { Directions }
+            <div className="slider-wrapper">
                 <ThemeProvider theme={classes}>
-                    { DirectionSlider }
+                    { EffectLengthSlider }
                     { LevelSlider }
                     { NextLevelSlider }
                 </ThemeProvider>
-                
             </div>
-            <button className="btn btn-success ff-launch" onClick={updateParams}>Upload</button>
+            <div className="ff-launch-container">
+                <Checkbox 
+                    className="btn btn-orange ff-live" 
+                    checkedClassName='btn-orange-checked' 
+                    html={<div>Live</div>}
+                    onClick={liveUploadUpdate} />
+                <button className="btn btn-success ff-launch" onClick={launchFF}>Upload</button>
+            </div>
         </div>
     )
 }

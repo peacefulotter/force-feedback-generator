@@ -3,6 +3,7 @@ package com.peacefulotter.ffserver.control;
 import at.wisch.joystick.FFJoystick;
 import at.wisch.joystick.JoystickManager;
 import at.wisch.joystick.exception.FFJoystickException;
+import com.peacefulotter.ffserver.FFParams;
 import com.peacefulotter.ffserver.control.attributes.FFDirection;
 import com.peacefulotter.ffserver.control.attributes.FFLevel;
 import com.peacefulotter.ffserver.control.ffeffect.FFEffect;
@@ -11,13 +12,14 @@ import com.peacefulotter.ffserver.control.ffeffect.FFEffect;
 // D:\Java\projects\ForceFeedback
 public class FFControl
 {
-    public static void launchFF()
+    private static FFJoystick joystick;
+
+    public static void initControls()
     {
-        FFJoystick joystick;
         try
         {
             JoystickManager.init();
-            joystick = JoystickManager.getFFJoystick();
+            FFControl.joystick = JoystickManager.getFFJoystick();
         } catch ( FFJoystickException e )
         {
             e.printStackTrace();
@@ -28,27 +30,26 @@ public class FFControl
         System.out.println(joystick.getGain());
         System.out.println(joystick.getSupportedEffects());
         System.out.println(joystick.getSimpleEffect());
-
-        FFEffect effect1 = createConstantEffect( FFDirection.LEFT, new FFLevel( 0 ), new FFLevel( -0.5 ));
-        FFEffect effect2 = createConstantEffect(FFDirection.RIGHT, new FFLevel( -0.5 ), new FFLevel( 0 ));
-        FFEffect effect3 = createConstantEffect(FFDirection.RIGHT, new FFLevel( 0 ), new FFLevel( 0.5 ));
-
-        boolean x = joystick.newEffect( effect1.getEffect() );
-        boolean y = joystick.newEffect( effect2.getEffect() );
-        boolean z = joystick.newEffect( effect3.getEffect() );
-        System.out.println(x + " " + y + " " + z);
-
-        boolean a = joystick.playEffect( effect1.getEffect(), 1 );
-        boolean b = joystick.playEffect( effect2.getEffect(), 1 );
-        boolean c = joystick.playEffect( effect3.getEffect(), 1 );
-        System.out.println(a + " " + b + " " + c);
     }
 
-    private static FFEffect createConstantEffect(FFDirection direction, FFLevel previousLevel, FFLevel nextLevel )
+    public static boolean launchFF( FFParams params )
     {
-        int effectLength = 300;        // the effect length in ms (or INFINITE_LENGTH)
-        FFLevel level = new FFLevel( 0.2 );
-        return new FFEffect(direction, effectLength, previousLevel, nextLevel, level );
+        FFEffect effect = createConstantEffect( params );
+        boolean created = joystick.newEffect( effect.getEffect() );
+        if ( !created ) return false;
+        boolean played = joystick.playEffect( effect.getEffect(), 1 );
+        System.out.println(played);
+        return played;
+    }
+
+    private static FFEffect createConstantEffect( FFParams params )
+    {
+        FFDirection direction = FFDirection.fromIndex( params.getDirection() );
+        int effectLength = params.getEffectLength(); // the effect length in ms (or INFINITE_LENGTH)
+        FFLevel previousLevel = new FFLevel( params.getPreviousLevel() );
+        FFLevel nextLevel = new FFLevel( params.getNextLevel() );
+        FFLevel level = new FFLevel( params.getLevel() );
+        return new FFEffect( direction, effectLength, previousLevel, nextLevel, level );
     }
 
     private static FFEffect createSineEffect()

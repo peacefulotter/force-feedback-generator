@@ -24,6 +24,6 @@ public class FFLevel
     @Override
     public String toString()
     {
-        return "FFLevel: " + ffLevel;
+        return "[FFLevel] " + ffLevel;
     }
 }

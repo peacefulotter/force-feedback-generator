@@ -2,10 +2,11 @@
 .ff-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
-    width: 60%;
-    height: 80%;
+    width: 50%;
+    height: 100%;
+    margin-top: -30px;
 }
 
 
@@ -17,6 +18,7 @@
 
 .ff-main-title {
     font-size: 3em;
+    font-family: GothamBold;
 }
 
 .ff-sub-title {
@@ -33,16 +35,59 @@
     margin: 0px 10px;
 }
 
+.slider-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .slider-container {
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin: 50px 0px;
+    margin: 20px 0px;
 }
 
-.slider-name {
+.directions-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.slider-name, .directions-name {
    margin-right: 25px;
    margin-bottom: 5px;
+    white-space: nowrap;
+}
+
+.directions-btns {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.direction-btn {
+    flex: 1 0 20%;
+    margin: 10px 10px;
+}
+
+.ff-launch-container {
+    display: flex;
+    align-items: center;
+}
+
+.ff-launch-container * {
+    margin: 0px 20px;
+}
+
+.ff-live {
+    width: 80px;
+    height: 2.5em;
+    padding: 0px !important;
+    line-height: 2.5em;
+    font-size: 1em !important;
+    border-radius: 1px;
 }
 
 .ff-launch {

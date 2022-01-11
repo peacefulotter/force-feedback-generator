@@ -10,6 +10,10 @@
   --8: rgb(35, 206, 107);
   --9: rgb(8, 139, 40);
   --10: rgb(168, 70, 160);
+  --11: rgb(40, 146, 215);
+  --12: rgb(247, 108, 94);
+  --13: #F68E5F;
+  --14: #F5DD90;
 }
 
 
@@ -41,14 +45,20 @@ html, body {
 
 .App {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   width: 100vw;
   height: 100vh;
   text-align: center;
   background: var(--5);
-  font-size: 1.2em;
+  font-size: 1.1em;
   font-family: GothamRegular; 
+}
+
+.controller-wrapper {
+  display: flex;
+  height: 75%;
 }
 
 .btn {
@@ -59,7 +69,7 @@ html, body {
   cursor: pointer;
   text-transform: uppercase;
   color: var(--2);
-  font-size: 1.3em;
+  font-size: 1.2em;
   font-family: GothamBold; 
   outline: none;
 }
@@ -77,6 +87,26 @@ html, body {
 .btn-success:active {
   font-size: 1.3em !important;
   margin: 0.05em;
+}
+
+.btn-blue:hover {
+  background: rgba(40, 146, 215, 0.15) !important;
+  color: var(--11) !important;
+}
+
+.btn-blue-checked {
+  background: rgba(40, 146, 215, 0.15) !important;
+  color: rgb(70, 176, 245) !important;
+}
+
+.btn-orange:hover {
+  background: rgba(247, 108, 94, 0.15) !important;
+  color: var(--12) !important;
+}
+
+.btn-orange-checked {
+  background: rgba(247, 108, 94, 0.15) !important;
+  color: rgb(277, 138, 124) !important;
 }
 
 .btn-purple:hover {

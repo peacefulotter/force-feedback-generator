@@ -5,33 +5,39 @@ import { makeStyles } from '@mui/styles';
 import '../css/ff.css';
 import '../App.css';
 
-export const useSliderStyles = makeStyles(theme => ({
-    root: {
-        width: "350px !important",
-        height: "8px !important"
-    },
-    thumb: {
-        background: 'var(--2) !important'
-    },
-    mark: {},
-    rail: {
-        background: "linear-gradient(to right, var(--7), var(--6) 50%, var(--8) 50%, var(--9));",
-        opacity: "0.9 !important"
-    },
-    track: {
-      background: "transparent !important",
-      border: "2px solid var(--2) !important"
-    },
-    valueLabel: {}
-}));
+export const useSliderStyles = makeStyles(theme => {
+    console.log("here");
+    return ({
+        root: {
+            width: "350px !important",
+            height: "1em !important"
+        },
+        thumb: {
+            background: 'var(--2) !important',
+            width: "2em !important",
+            height: "2em !important",
+        },
+        mark: {},
+        rail: {
+            background: "linear-gradient(to right, var(--6), var(--7) 50%, var(--9) 50%, var(--8));",
+            opacity: "0.9 !important"
+        },
+        track: {
+        background: "transparent !important",
+        border: "2px solid var(--2) !important"
+        },
+        valueLabel: {}
+    })
+});
 
 
-const useSlider = (name: String): [ number, any ] => {
+const useSlider = (name: String, callback?: () => void): [ number, any ] => {
     const [value, setValue] = useState<number>(0);
     const classes = useSliderStyles();
 
     const updateSlider = (event: any) => {
         setValue(event.target.value)
+        if ( callback ) callback()
     }
 
     return [
@@ -41,7 +47,7 @@ const useSlider = (name: String): [ number, any ] => {
             <Slider value={value} onChange={updateSlider} 
                 min={-1} max={1}
                 valueLabelDisplay="on"
-                step={0.1}
+                step={0.02}
                 classes={{
                     root: classes.root,
                     thumb: classes.thumb,

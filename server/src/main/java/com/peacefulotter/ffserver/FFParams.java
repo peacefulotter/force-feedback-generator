@@ -1,44 +1,59 @@
 package com.peacefulotter.ffserver;
 
+import com.peacefulotter.ffserver.control.attributes.FFDirection;
+import com.peacefulotter.ffserver.control.attributes.FFLevel;
+
 public class FFParams
 {
-    private String name;
-    private int number;
+    private String type;
+    private int direction;
+    private int effectLength;
+    private double previousLevel, nextLevel, level;
 
-    public FFParams( String name, int number )
+    public FFParams( String type, int direction, int effectLength, double previousLevel, double nextLevel, double level )
     {
-        this.name = name;
-        this.number = number;
+        this.type = type;
+        this.direction = direction;
+        this.effectLength = effectLength;
+        this.previousLevel =  previousLevel;
+        this.nextLevel = nextLevel;
+        this.level = level;
     }
 
-    public void incr()
-    {
-        number++;
-    }
+    public String getType() { return type; }
+    public int getDirection() { return direction; }
+    public double getPreviousLevel() { return previousLevel; }
+    public double getNextLevel() { return nextLevel; }
+    public double getLevel() { return level; }
+    public int getEffectLength() { return effectLength; }
 
-    public String getName()
+    public void setType( String type )
     {
-        return name;
+        this.type = type;
     }
-
-    public void setName( String name )
+    public void setDirection( int direction )
     {
-        this.name = name;
+        this.direction = direction;
     }
-
-    public int getNumber()
+    public void setEffectLength( int effectLength ) { this.effectLength = effectLength; }
+    public void setPreviousLevel( double previousLevel )
     {
-        return number;
+        this.previousLevel = previousLevel;
     }
-
-    public void setNumber( int number )
+    public void setNextLevel( double nextLevel )
     {
-        this.number = number;
+        this.nextLevel = nextLevel;
     }
+    public void setLevel( double level ) { this.level = level; }
 
     @Override
     public String toString()
     {
-        return name + " " + number;
+        return  "[" + type + "] " +
+                direction + " " +
+                effectLength + "ms " +
+                previousLevel + " " +
+                nextLevel + " " +
+                level;
     }
 }

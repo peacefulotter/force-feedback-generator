@@ -9,16 +9,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class FFServer
 {
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
+		FFControl.initControls();
 		SpringApplication.run( FFServer.class, args);
 	}
 
 	@PostMapping(value = "/params", consumes = "application/json", produces = "application/json")
 	@ResponseBody FFParams postParams(@RequestBody FFParams params) {
-		System.out.println("params");
+		System.out.println("Received POST request");
 		System.out.println(params);
-		params.incr();
-		FFControl.launchFF();
+		boolean launched = FFControl.launchFF(params);
+		System.out.println("Launched " + launched);
 		return params;
 	}
 }
