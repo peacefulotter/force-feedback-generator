@@ -58,7 +58,8 @@ html, body {
 
 .controller-wrapper {
   display: flex;
-  height: 75%;
+  justify-content: space-around;
+  height: 80%;
 }
 
 .btn {

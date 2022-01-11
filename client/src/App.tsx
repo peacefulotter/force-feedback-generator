@@ -1,6 +1,6 @@
 
 import ForceFeedback from './Components/ForceFeedback'
-import Status from './Components/Status'
+import WheelStatus from './Components/WheelStatus'
 
 import './App.css';
 
@@ -14,7 +14,7 @@ function App() {
       </div>
 
       <div className="controller-wrapper">
-        <Status />
+        <WheelStatus />
         <ForceFeedback />
       </div>
       
