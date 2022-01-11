@@ -39,3 +39,4 @@ mvnw
 mvnw.cmd
 *.xml
 *.iml
+*.log
