@@ -1,4 +1,5 @@
 
+export type FFType = "constant" | "sine" | "ramp";
 
 export interface Status {
     name: string;

@@ -6,14 +6,14 @@ import '../css/ff.css';
 import '../App.css';
 
 interface Props {
-    axis: number
+    axis: number 
 }
 
 const sliderStyle: SliderStyle = {
-    a: "red",
-    b: "black",
-    c: "black",
-    d: "green"
+    a: "var(--6)",
+    b: "var(--11)",
+    c: "var(--11)",
+    d: "var(--8)"
 }
 
 const Axis: FC<Props> = ( { axis } ) => {

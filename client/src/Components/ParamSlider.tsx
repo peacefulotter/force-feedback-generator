@@ -14,13 +14,13 @@ export interface SliderStyle {
 
 export const useSliderStyles = makeStyles(theme => ({
     root: {
-        width: "350px !important",
-        height: "1em !important",
+        width: "290px !important",
+        height: "10px !important",
     },
     thumb: {
         background: 'var(--2) !important',
-        width: "1.8em !important",
-        height: "1.8em !important",
+        width: "25px !important",
+        height: "25px !important",
     },
     rail: (props: SliderStyle) => ({
         background: `linear-gradient(to right, ${props.a}, ${props.b} 50%, ${props.c} 50%, ${props.d})`,
@@ -37,7 +37,14 @@ export const useSliderStyles = makeStyles(theme => ({
         background: "transparent !important",
         border: "2px solid var(--2) !important"
     },
-    valueLabel: {}
+    valueLabel: {
+        transform: "translate(0%,30%) scale(1) !important",
+        left: "40px !important",
+        "&::before": {
+            left: "0px !important",
+            transform: "translate(-50%, -120%) rotate(135deg) !important"
+        }
+    }
 }));
 
 interface Props {

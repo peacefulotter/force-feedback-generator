@@ -10,9 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-
-
 @EnableScheduling
 @Configuration
 @Service
@@ -23,7 +20,7 @@ public class SchedulerConfig
     @Autowired
     private SimpMessagingTemplate template;
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 100)
     public void send()
     {
         template.convertAndSend( "/topic/poll", FFControl.getPoll() );

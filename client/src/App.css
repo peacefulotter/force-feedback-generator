@@ -3,9 +3,9 @@
   --1: #a5aca9;
   --2: rgb(250, 243, 221);
   --3: #ad8350ff;
-  --4: #3e4c5eff;
-  --5: #2c3d55ff;
-  --6: rgb(204, 41, 54);
+  --4: #525252;
+  --5: #2f2f2f;
+  --6: rgb(233, 57, 72);
   --7: #9b1d20ff;
   --8: rgb(35, 206, 107);
   --9: rgb(8, 139, 40);
@@ -14,6 +14,8 @@
   --12: rgb(247, 108, 94);
   --13: #F68E5F;
   --14: #F5DD90;
+  --15: #3e4c5eff;
+  --16: #2c3d55ff;
 }
 
 
@@ -45,22 +47,13 @@ html, body {
 
 .App {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-evenly;
   width: 100vw;
   height: 100vh;
   text-align: center;
   background: var(--5);
   font-size: 1.1em;
   font-family: GothamRegular; 
-}
-
-.controller-wrapper {
-  display: flex;
-  justify-content: space-around;
-  width: 90%;
-  height: 80%;
 }
 
 .btn {
@@ -76,19 +69,14 @@ html, body {
   outline: none;
 }
 
-.btn-error:hover {
-  background: rgba(204, 41, 54, 0.2);
-  color: var(--6);
+.btn-error:hover, .btn-error-checked {
+  background: rgba(204, 41, 54, 0.2) !important;
+  color: var(--6) !important;
 }
 
 .btn-success:hover, .btn-success-checked {
   background: rgba(35, 206, 107, 0.15) !important;
   color: var(--8) !important;
-}
-
-.btn-success:active {
-  font-size: 1.3em !important;
-  margin: 0.05em;
 }
 
 .btn-blue:hover {

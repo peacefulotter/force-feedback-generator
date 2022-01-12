@@ -58,6 +58,12 @@ const WheelStatus = () => {
 
     return (
         <div className="status-wrapper">
+            
+            <div className="ff-title">
+                <div className="ff-main-title">ForceFeedback</div>
+                <div className="ff-sub-title">Controller</div>
+            </div>
+
             <div className="status-header">
                 <div className="btn btn-purple-checked status-gain">{status?.gain}%</div>
                 <div className={`btn ${status?.active ? "btn-success-checked" : "btn-error-checked"} status-active`}>{status?.active ? "connected" : "disconnected"}</div>
