@@ -13,9 +13,10 @@ public class StatusController
     @CrossOrigin(origins = "http://localhost:3000")
     @MessageMapping("/greetings")
     @SendTo("/topic/greetings")
-    public FFStatus getStatus()
+    public FFStatus getStatus( String status)
     {
-        System.out.println("In the ws controller");
+        System.out.println(status);
+        System.out.println("In the ws controller " + FFControl.getStatus());
         return FFControl.getStatus();
     }
 }

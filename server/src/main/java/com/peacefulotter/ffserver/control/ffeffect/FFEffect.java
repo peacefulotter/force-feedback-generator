@@ -14,7 +14,7 @@ public class FFEffect
     protected static final int buttonIndex = NO_BUTTON;
     protected static final int buttonInterval = 0;
     protected static final int attackLength = 0;
-    protected static final int fadeLength = 0;
+    protected static final int fadeLength = 300;
 
     private final Effect effect;
 

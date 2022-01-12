@@ -22,7 +22,8 @@ public class FFServer
 	}
 
 	@GetMapping(value = "/status", consumes = "application/json", produces = "application/json")
-	@ResponseBody FFStatus getStatus() {
+	@ResponseBody
+	FFStatus getStatus() {
 		System.out.println("Received GET request");
 		return FFControl.getStatus();
 	}

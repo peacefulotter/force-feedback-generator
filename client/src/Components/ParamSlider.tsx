@@ -4,7 +4,6 @@ import { makeStyles } from '@mui/styles';
 
 import '../css/ff.css';
 import '../App.css';
-import { visitLexicalEnvironment } from 'typescript';
 
 export interface SliderStyle {
     a: string;

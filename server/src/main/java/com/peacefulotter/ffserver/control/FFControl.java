@@ -4,6 +4,7 @@ import at.wisch.joystick.FFJoystick;
 import at.wisch.joystick.JoystickManager;
 import at.wisch.joystick.exception.FFJoystickException;
 import com.peacefulotter.ffserver.FFParams;
+import com.peacefulotter.ffserver.websocket.FFPoll;
 import com.peacefulotter.ffserver.FFStatus;
 import com.peacefulotter.ffserver.control.attributes.FFDirection;
 import com.peacefulotter.ffserver.control.attributes.FFLevel;
@@ -37,8 +38,18 @@ public class FFControl
     {
         boolean active = true;
         String name = joystick.getName();
-        float axisAngle = joystick.getXAxisValue();
-        return new FFStatus( active, name, axisAngle );
+        String description = joystick.getDescription();
+        String ffDescription = joystick.getFFDescription();
+        int gain = joystick.getGain();
+
+        return new FFStatus( active, name, description, ffDescription, gain );
+    }
+
+    public static FFPoll getPoll()
+    {
+        joystick.poll();
+        float axisAngle = joystick.getRXAxisValue();
+        return new FFPoll( axisAngle );
     }
 
     public static boolean launchFF( FFParams params )
