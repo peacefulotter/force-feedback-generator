@@ -23,10 +23,9 @@ public class SchedulerConfig
     @Autowired
     private SimpMessagingTemplate template;
 
-    @Scheduled(fixedDelay = 100)
+    @Scheduled(fixedDelay = 1000)
     public void send()
     {
-        logger.info("Send polled data", Instant.now());
         template.convertAndSend( "/topic/poll", FFControl.getPoll() );
     }
 }

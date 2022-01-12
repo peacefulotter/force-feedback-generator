@@ -14,26 +14,26 @@ public class FFEffect
     protected static final int buttonIndex = NO_BUTTON;
     protected static final int buttonInterval = 0;
     protected static final int attackLength = 0;
-    protected static final int fadeLength = 300;
+    protected static final int fadeLength = 0;
+    protected static final int previousLevel = 0;
+    protected static final int nextLevel = 0;
 
     private final Effect effect;
 
-    public FFEffect(
-            FFDirection direction, int effectLength, FFLevel previousLevel, FFLevel nextLevel,
-            FFLevel level )
+    public FFEffect( FFDirection direction, int effectLength, FFLevel level )
     {
         this.effect = new ConstantEffect(direction.getDirection(), effectLength,
                 effectDelay, buttonIndex, buttonInterval, attackLength,fadeLength,
-                previousLevel.getLevel(), nextLevel.getLevel(), level.getLevel() );
+                previousLevel, nextLevel, level.getLevel() );
     }
 
     public FFEffect(
-            FFDirection direction, int effectLength, FFLevel previousLevel, FFLevel nextLevel,
+            FFDirection direction, int effectLength,
             int period, FFLevel magnitude, FFLevel offset, int phase)
     {
         this.effect = new SineEffect(direction.getDirection(), effectLength,
                 effectDelay, buttonIndex, buttonInterval, attackLength, fadeLength,
-                previousLevel.getLevel(), nextLevel.getLevel(), period, magnitude.getLevel(), offset.getLevel(), phase);
+                previousLevel, nextLevel, period, magnitude.getLevel(), offset.getLevel(), phase);
     }
 
     public Effect getEffect()

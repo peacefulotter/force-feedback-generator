@@ -30,10 +30,7 @@ const WheelStatus = () => {
     const [status, setStatus] = useState<Status>()
 
     useEffect(() => {
-        getRequest("/status", (d) => {
-            console.log(d);
-            
-            setStatus(d) } )
+        getRequest("/status", setStatus )
 
         const client = new Client(); 
         
@@ -46,12 +43,12 @@ const WheelStatus = () => {
                     const arr = Array.from(message.binaryBody)
                     const res = String.fromCharCode.apply(null, arr)
                     const status = JSON.parse(res);
-                    console.log(status);
+                    // console.log(status);
                     setPoll(status)
                 });
             },
             debug: (str) => {
-              console.log(new Date(), str);
+              // console.log(new Date(), str);
             }
         });
 

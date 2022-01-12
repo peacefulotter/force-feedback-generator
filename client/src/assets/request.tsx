@@ -1,11 +1,11 @@
 
-const req = ( path: string, credentials: any, callback: (data: any) => void ) => {
+const req = ( path: string, credentials: any, callback?: (data: any) => void ) => {
     fetch(path, credentials)
         .then(res => res.json())
-        .then(data => callback(data));
+        .then(data => callback ? callback(data) : null);
 }
 
-export const postRequest = ( path: string, params: object, callback: (data: any) => void ) => {
+export const postRequest = ( path: string, params: object, callback?: (data: any) => void ) => {
     const CREDENTIALS = {
         method: 'POST',
         body: JSON.stringify(params),

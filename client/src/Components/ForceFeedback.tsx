@@ -21,14 +21,12 @@ const levelSliderStyle: SliderStyle = {
 const ForceFeedback = () => {
     const [liveUpload, setLiveUpload] = useState<boolean>(false)
     const [type, setType] = useState<string>("constant");
-    const [previousLevel, setPreviousLevel] = useState<number>(0);
 
     const [direction, Directions] = useDirections();
 
     const classes = useSliderStyles(levelSliderStyle);
     
     let effectLength = 0;
-    let nextLevel = 0;
     let level = 0;
 
     const updateType = (t: string) => (isChecked: boolean) => {
@@ -36,7 +34,6 @@ const ForceFeedback = () => {
     }
 
     const updateLength = (v: number) => { effectLength = v; }
-    const updateNextLevel = (v: number) => { nextLevel = v; }
     const updateLevel = (v: number) => { level = v; if ( liveUpload ) launchFF() }
 
     const liveUploadUpdate = (isChecked: boolean) => {
@@ -45,15 +42,11 @@ const ForceFeedback = () => {
 
     const launchFF = () => {
         const FF_SETTINGS = {
-            type, direction, effectLength, previousLevel, nextLevel, level
+            type, direction, effectLength, level
         }
 
         console.log("Sending POST request with FF settings: ", FF_SETTINGS);
-        
-        postRequest("/params", FF_SETTINGS, (data) => {
-            console.log(data);
-            // setPreviousLevel(level);
-        })
+        postRequest( "/params", FF_SETTINGS )
     }
 
     return (
@@ -76,7 +69,6 @@ const ForceFeedback = () => {
             <div className="slider-wrapper">
                 <ThemeProvider theme={classes}>
                     <ParamSlider name="Effect Length" style={lengthSliderStyle} min={0} max={1000} step={10} unit="ms" callback={updateLength}/>
-                    <ParamSlider name="Next Level" style={levelSliderStyle} min={-1} max={1} step={0.02} allowMark={true} callback={updateNextLevel}/>
                     <ParamSlider name="Level" style={levelSliderStyle} min={-1} max={1} step={0.02} allowMark={true} callback={updateLevel}/>
                 </ThemeProvider>
             </div>

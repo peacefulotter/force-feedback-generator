@@ -14,6 +14,7 @@ import com.peacefulotter.ffserver.control.ffeffect.FFEffect;
 // D:\Java\projects\ForceFeedback
 public class FFControl
 {
+    private static boolean initialized;
     private static FFJoystick joystick;
 
     public static void initControls()
@@ -28,25 +29,27 @@ public class FFControl
             return;
         }
 
-        System.out.println(joystick.getFFDescription());
-        System.out.println(joystick.getGain());
-        System.out.println(joystick.getSupportedEffects());
-        System.out.println(joystick.getSimpleEffect());
+        initialized = true;
     }
 
     public static FFStatus getStatus()
     {
-        boolean active = true;
+        if ( !initialized )
+            return new FFStatus( false, "","", "", 0 );
+
         String name = joystick.getName();
         String description = joystick.getDescription();
         String ffDescription = joystick.getFFDescription();
         int gain = joystick.getGain();
 
-        return new FFStatus( active, name, description, ffDescription, gain );
+        return new FFStatus( true, name, description, ffDescription, gain );
     }
 
     public static FFPoll getPoll()
     {
+        if ( !initialized )
+            return new FFPoll( 0 );
+
         joystick.poll();
         float axisAngle = joystick.getRXAxisValue();
         return new FFPoll( axisAngle );
@@ -54,6 +57,9 @@ public class FFControl
 
     public static boolean launchFF( FFParams params )
     {
+        if ( !initialized )
+            return false;
+
         FFEffect effect = createConstantEffect( params );
         boolean created = joystick.newEffect( effect.getEffect() );
         if ( !created ) return false;
@@ -66,13 +72,11 @@ public class FFControl
     {
         FFDirection direction = FFDirection.fromIndex( params.getDirection() );
         int effectLength = params.getEffectLength(); // the effect length in ms (or INFINITE_LENGTH)
-        FFLevel previousLevel = new FFLevel( params.getPreviousLevel() );
-        FFLevel nextLevel = new FFLevel( params.getNextLevel() );
         FFLevel level = new FFLevel( params.getLevel() );
-        return new FFEffect( direction, effectLength, previousLevel, nextLevel, level );
+        return new FFEffect( direction, effectLength, level );
     }
 
-    private static FFEffect createSineEffect()
+    /*private static FFEffect createSineEffect()
     {
         FFDirection direction = FFDirection.NORTH;
         int effectLength = 10000;        // the effect length in ms (or INFINITE_LENGTH)
@@ -83,5 +87,5 @@ public class FFControl
         FFLevel offset = new FFLevel( 0 ); // the offset (mean value of the wave)
         int phase = 10000; // the phase (horizontal cycle shift in hundredth of a degree)
         return new FFEffect(direction, effectLength, previousLevel, nextLevel, period, magnitude, offset, phase);
-    }
+    }*/
 }
