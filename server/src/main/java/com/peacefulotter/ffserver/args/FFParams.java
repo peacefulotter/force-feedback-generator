@@ -1,4 +1,4 @@
-package com.peacefulotter.ffserver;
+package com.peacefulotter.ffserver.args;
 
 public class FFParams
 {

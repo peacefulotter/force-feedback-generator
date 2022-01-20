@@ -50,3 +50,20 @@
     padding: 10px 5px;
     white-space: nowrap;
 }
+
+
+
+.recording-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    min-width: 450px;
+    margin-top: 50px;
+}
+
+.recording-separation {
+    width: 1px;
+    height: 100%;
+    background: grey;
+}

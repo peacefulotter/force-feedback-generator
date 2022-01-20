@@ -9,11 +9,11 @@ import '../App.css';
 import { FFType } from '../assets/models';
 
 
-const lengthSliderStyle: SliderStyle = {
+export const lengthSliderStyle: SliderStyle = {
     a: "var(--14)", b: "var(--12)", c: "var(--12)", d: "var(--6)"
 }
 
-const levelSliderStyle: SliderStyle = {
+export const levelSliderStyle: SliderStyle = {
     a: "var(--10)", b: "var(--11)", c: "var(--11)", d: "var(--8)"
 }
 

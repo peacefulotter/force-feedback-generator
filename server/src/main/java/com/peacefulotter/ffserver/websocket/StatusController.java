@@ -1,6 +1,6 @@
 package com.peacefulotter.ffserver.websocket;
 
-import com.peacefulotter.ffserver.FFStatus;
+import com.peacefulotter.ffserver.args.FFStatus;
 import com.peacefulotter.ffserver.control.FFControl;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;

@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs'
 
 import Axis from './Axis';
+import ParamSlider from './ParamSlider';
+import Recording from './Recording';
+import { lengthSliderStyle } from './FFSliders'; 
 
 import { Status, Poll } from '../assets/models';
-import { getRequest } from '../assets/request';
+import { getRequest, postRequest } from '../assets/request';
 
 import '../css/status.css';
 import '../App.css';
@@ -55,6 +58,15 @@ const WheelStatus = () => {
         client.activate();
     }, [])
 
+    const moveWheel = (val: number) => {
+        const PARAMS = { angle: val }
+        console.log(PARAMS);
+        
+        postRequest('/control', PARAMS, (data) => {
+            console.log(data);
+        })
+    }
+
 
     return (
         <div className="status-wrapper">
@@ -73,6 +85,13 @@ const WheelStatus = () => {
             <div className="wheel-description">{formatDescription(status?.description, status?.ffDescription)}</div>
 
             <Axis axis={poll?.axisAngle || 0} />
+            <ParamSlider 
+                name="Move"
+                style={lengthSliderStyle} 
+                min={-1} max={1} step={0.02} allowMark={true} 
+                callback={moveWheel}/>
+
+            <Recording />
         </div>
     )
 }

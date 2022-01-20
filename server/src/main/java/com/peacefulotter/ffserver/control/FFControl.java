@@ -3,9 +3,11 @@ package com.peacefulotter.ffserver.control;
 import at.wisch.joystick.FFJoystick;
 import at.wisch.joystick.JoystickManager;
 import at.wisch.joystick.exception.FFJoystickException;
-import com.peacefulotter.ffserver.FFParams;
+import at.wisch.joystick.exception.JoystickNotFoundException;
+import com.peacefulotter.ffserver.args.FFAngle;
+import com.peacefulotter.ffserver.args.FFParams;
 import com.peacefulotter.ffserver.websocket.FFPoll;
-import com.peacefulotter.ffserver.FFStatus;
+import com.peacefulotter.ffserver.args.FFStatus;
 import com.peacefulotter.ffserver.control.attributes.FFDirection;
 import com.peacefulotter.ffserver.control.attributes.FFLevel;
 import com.peacefulotter.ffserver.control.ffeffect.FFEffect;
@@ -17,19 +19,20 @@ public class FFControl
     private static boolean initialized;
     private static FFJoystick joystick;
 
-    public static void initControls()
+    public static boolean initControls()
     {
         try
         {
             JoystickManager.init();
             FFControl.joystick = JoystickManager.getFFJoystick();
-        } catch ( FFJoystickException e )
+        } catch ( Exception e )
         {
             e.printStackTrace();
-            return;
+            return false;
         }
 
         initialized = true;
+        return true;
     }
 
     public static FFStatus getStatus()
@@ -66,6 +69,25 @@ public class FFControl
         boolean played = joystick.playEffect( effect.getEffect(), 1 );
         System.out.println(played);
         return played;
+    }
+
+    public static boolean moveAngle( FFAngle angle )
+    {
+        if ( !initialized )
+            return false;
+
+        joystick.poll();
+
+        System.out.println(joystick.getAutoCenter());
+        System.out.println(joystick.isAutocenterSupported());
+        int maxNumEffects = 10;
+
+        float axisAngle = joystick.getRXAxisValue();
+        float delta = angle.getAngle() - axisAngle;
+        int time = (int) (Math.abs( delta ) * 200);
+        System.out.println("Angle: " + angle.getAngle() + " Axis: " + axisAngle + " Delta: " + delta + " Time: " + time );
+        FFParams params = new FFParams( "constant", 0, 100, delta );
+        return launchFF( params );
     }
 
     private static FFEffect createConstantEffect( FFParams params )
