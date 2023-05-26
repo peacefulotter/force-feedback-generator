@@ -1,22 +1,42 @@
 'use client'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import EventSource from 'eventsource';
 
 import { sse, Axios } from '../config';
 
+const normalize = (x: number, y: number) => {
+	const len = Math.sqrt(x * x + y * y)
+	return len > 0.5 ? {x: x / len, y: y / len} : {x, y}
+}
+
 export default function Home() {
+
+	const [pos, setPos] = useState({x: 0, y: 0})
+	const [_pos, _setPos] = useState({x: 0, y: 0})
+
 	useEffect( () => {
-		console.log("here")
 		// Axios.get('/token').then(({data}) => {
 		// 	console.log(data);
 		// })
+		console.log(sse);
+		
 		sse.onopen = (e) => { console.log('listen to api-sse endpoint', e)};
 		sse.onmessage = (e) => {
-			const json = JSON.parse(e.data)
-			console.log('Received:', json);
+			const { name, data, value } = JSON.parse(e.data)
+			if ( name == 'rx') {
+				setPos(({y}) => normalize(value, y))
+				_setPos(({y}) => normalize(data, y))
+			}
+			else if ( name == 'ry') {
+				setPos(({x}) => normalize(x, value))
+				_setPos(({x}) => normalize(x, data))
+			}
 		};
 		sse.onerror = (e) => { console.log('error', e )};
-		return () => sse.close()
+		return () => {
+			console.log('Closing SSE');
+			sse.close()
+		}
 	}, [])
 
 	const onClick = () => {
@@ -26,6 +46,10 @@ export default function Home() {
 	return (
 		<main className="">
 			<button onClick={onClick} className='bg-gray-800 px-6 py-2 rounded'>toggle</button>
+			<div className="relative m-24 border-2 bg-slate-600 w-96 h-96">
+				<div className="absolute rounded bg-red-400 w-5 h-5" style={{left: `${(pos.x / 2 + 0.5) * 100}%`, top: `${(pos.y / 2 + 0.5) * 100}%`}}></div>
+				<div className="absolute rounded bg-green-400 w-5 h-5" style={{left: `${(_pos.x / 2 + 0.5) * 100}%`, top: `${(_pos.y / 2 + 0.5) * 100}%`}}></div>
+			</div>
 		</main>
 	)
 }

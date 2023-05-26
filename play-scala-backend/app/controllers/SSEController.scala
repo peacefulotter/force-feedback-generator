@@ -8,12 +8,8 @@ import akka.stream.{CompletionStrategy, OverflowStrategy}
 import akka.stream.scaladsl.Source
 import manager.ActorRefManager
 import manager.ActorRefManager._
-import models.Message
 import play.api.http.ContentTypes
 import play.api.libs.EventSource
-//import play.api.libs.functional.syntax.{toFunctionalBuilderOps, unlift}
-//import play.api.libs.json.{JsPath, Json, Writes}
-//import play.filters.csrf.{CSRF, CSRFAddToken}
 import play.api.mvc._
 
 import java.awt.MouseInfo
@@ -44,10 +40,10 @@ class SSEController @Inject()(
 	
 	private def sendMouseLocation: Runnable = new Runnable() {
 		def run(): Unit = {
-			// You can replace the Message object by anything you want to send to the frontend through SSE
-			val loc = MouseInfo.getPointerInfo.getLocation
-			val msg = Message(loc.x, loc.y, System.currentTimeMillis()).toString
-			manager ! SendMessage(msg)
+			USBControllerPolling.pollController() match {
+				case Some(info) => manager ! SendMessage(info.toString)
+				case None => ;
+			}
 		}
 	}
 	
@@ -55,14 +51,18 @@ class SSEController @Inject()(
 	
 	private def startScheduler(): Cancellable = system.scheduler.scheduleAtFixedRate(
 		initialDelay = 0 microseconds,
-		interval = 10 millisecond,
+		interval = 25 millisecond,
 	)(runnable = sendMouseLocation)
 	
 	def receiveMessage(): Action[AnyContent] = Action.apply { request =>
 		println(f"received message, scheduled: $scheduled")
 		scheduled match {
-			case Some(s) => s.cancel(); scheduled = None;
-			case _ => scheduled = Some(startScheduler());
+			case Some(s) =>
+				s.cancel();
+				scheduled = None;
+			case _ =>
+				USBControllerPolling.fetchController()
+				scheduled = Some(startScheduler())
 		}
 		Ok
 	}
