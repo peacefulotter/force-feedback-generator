@@ -2,17 +2,28 @@
 import { useEffect, useState } from 'react';
 import EventSource from 'eventsource';
 
-import { sse, Axios } from '../config';
+import { sse, SERVER_URL } from '../config';
 
 const normalize = (x: number, y: number) => {
 	const len = Math.sqrt(x * x + y * y)
 	return len > 0.5 ? {x: x / len, y: y / len} : {x, y}
 }
 
-export default function Home() {
+async function getData() {
+	const res = await fetch(`${SERVER_URL}/controller`);
+	if (!res.ok) {
+	  	throw new Error('Failed to fetch data');
+	}
+	return res.json();
+  }
+
+export default async function Home() {
 
 	const [pos, setPos] = useState({x: 0, y: 0})
 	const [_pos, _setPos] = useState({x: 0, y: 0})
+
+	const controller = await getData()
+	console.log(controller);
 
 	useEffect( () => {
 		// Axios.get('/token').then(({data}) => {
@@ -39,9 +50,6 @@ export default function Home() {
 		}
 	}, [])
 
-	const onClick = () => {
-		Axios.get('/toggle')
-	}
 
 	return (
 		<main className="">

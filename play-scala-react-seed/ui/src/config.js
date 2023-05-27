@@ -1,5 +1,3 @@
-'use client'
-
 const isLocalhost = Boolean(
     window.location.hostname === "localhost" ||
     // [::1] is the IPv6 localhost address.
@@ -14,4 +12,4 @@ export const SERVER_URL = isLocalhost
     ? "http://localhost:9000"
     : "https://www.example.com";
 
-export const sse = new EventSource(`${SERVER_URL}/stream`); // , { withCredentials: true }
+export const sse = new EventSource(`${SERVER_URL}/api/stream`); // , { withCredentials: true }

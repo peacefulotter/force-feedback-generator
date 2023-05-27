@@ -1,20 +1,24 @@
-package controllers
+package handler
 
-import models.ControllerInfo
-import net.java.games.input.{Component, Controller, ControllerEnvironment, Event}
+import models.{ControllerInfo, ControllerData}
+import net.java.games.input.{Controller, ControllerEnvironment, Event}
 
 
-object USBControllerPolling {
+object ControllerHandler {
 	
 	private var controller: Option[Controller] = None
 	
-	def fetchController(): Unit = {
+	def fetchController(): Option[ControllerInfo] = {
 		val environment = ControllerEnvironment.getDefaultEnvironment
 		val controllers = environment.getControllers
 		controller = controllers.find( _.getType == Controller.Type.GAMEPAD )
+		controller match {
+			case Some(c) => Some(ControllerInfo(c.getName, c.getType.toString, c.getPortType.toString))
+			case _ => None
+		}
 	}
 	
-	def pollController(): Option[ControllerInfo] = controller match {
+	def pollController(): Option[ControllerData] = controller match {
 		case Some(c) =>
 			if (!c.poll()) {
 				println("Controller no longer valid")
@@ -28,7 +32,7 @@ object USBControllerPolling {
 			if (component == null) return None;
 			val identifierName = component.getIdentifier.getName
 			val value = event.getValue
-			Some(ControllerInfo(identifierName, component.getPollData, value))
+			Some(ControllerData(identifierName, component.getPollData, value))
 		case None =>
 			println("Controller None")
 			None;

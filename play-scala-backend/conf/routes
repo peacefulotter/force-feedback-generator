@@ -5,7 +5,8 @@
 
 # An example controller showing a sample home page
 # GET     /token             controllers.SSEController.token()
-GET     /toggle            controllers.SSEController.receiveMessage()
+GET     /controller        controllers.SSEController.controller()
+GET     /toggle            controllers.SSEController.toggleActive()
 GET     /stream            controllers.SSEController.sse()
 
 
