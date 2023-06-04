@@ -1,17 +1,17 @@
 'use client'
 
-const isLocalhost = Boolean(
-    window.location.hostname === "localhost" ||
-    // [::1] is the IPv6 localhost address.
-    window.location.hostname === "[::1]" ||
-    // 127.0.0.1/8 is considered localhost for IPv4.
-    window.location.hostname.match(
-      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
-    )
-);
+// const isLocalhost = Boolean(
+//     window.location.hostname === "localhost" ||
+//     // [::1] is the IPv6 localhost address.
+//     window.location.hostname === "[::1]" ||
+//     // 127.0.0.1/8 is considered localhost for IPv4.
+//     window.location.hostname.match(
+//       /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+//     )
+// );
 
-export const SERVER_URL = isLocalhost
-    ? "http://localhost:9000"
-    : "https://www.example.com";
+// export const SERVER_URL = isLocalhost
+//     ? "http://localhost:8080"
+//     : "https://www.example.com";
 
-export const sse = new EventSource(`${SERVER_URL}/stream`); // , { withCredentials: true }
+export const SERVER_URL = "http://localhost:8000"
